@@ -1,0 +1,30 @@
+- name: install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+
+- name: import taks from common role
+  ansible.builtin.import_role:
+    name: common
+    tasks_from: app-pre-req
+
+# - name: Copy frontend.conf
+#   ansible.builtin.copy:
+#     src: frontend.conf
+#     dest: /etc/nginx/default.d/frontend.conf
+
+- name: Copy frontend.conf and frontend-upstream.conf
+  ansible.builtin.template:
+    src: "{{item.src}}"
+    dest: "{{item.dest}}"
+  loop:
+  - {src: 'frontend.conf.j2', dest: '/etc/nginx/default.d/frontend.conf'}
+  - {src: 'frontend-upstream.conf.j2', dest: '/etc/nginx/conf.d/frontend-upstream.conf'}
+  notify: 
+  - start and enable nginx service
+
+# - name: start and enable nginx service
+#   ansible.builtin.service:
+#     name: nginx
+#     state: restarted
+#     enabled: yes

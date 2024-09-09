@@ -1,0 +1,7 @@
+# to run this in /etc/nginx/conf.d/*.conf  ; for multiple backend servers
+
+# upstream name here: backend ; is used in frontend.conf
+upstream backend {
+    server {{backend_host}}:8080;
+    server {{backend2_host}}:8080;
+}

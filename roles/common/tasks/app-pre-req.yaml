@@ -1,0 +1,22 @@
+- name: "Remove existing directory for {{component}} code"
+  ansible.builtin.file:
+    path: "{{app_location}}"
+    state: absent
+  ignore_errors: true
+
+- name: "create directory for {{component}} code"
+  ansible.builtin.file:
+    path: "{{app_location}}"
+    state: directory
+
+- name: "Download {{component}} code"
+  ansible.builtin.unarchive:
+    src: "https://expense-builds.s3.us-east-1.amazonaws.com/expense-{{component}}-v2.zip"
+    dest: "{{app_location}}"
+    remote_src: yes 
+
+# - name: Unarchive a file that is already on the remote machine
+#   ansible.builtin.unarchive:
+#     src: "/tmp/{{component}}.zip"   # by default ansible considers the source in ansible server
+#     dest: "{{app_location}}"
+#     remote_src: yes 
