@@ -2,6 +2,6 @@
   hosts: backend
   become: yes
   vars_files:
-  - /var/ansible-creds/creds.yaml
+  - /var/ansible-creds/creds.yaml  # add the values for required variables in ansible vault
   roles:
   - backend
