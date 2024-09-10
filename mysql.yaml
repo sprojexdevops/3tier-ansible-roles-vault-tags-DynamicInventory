@@ -1,5 +1,7 @@
 - name: configure mysql server
   hosts: mysql
   become: yes
+  vars_files:
+  - /var/ansible-creds/creds.yaml
   roles:
   - mysql
